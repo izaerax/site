@@ -1,4 +1,13 @@
 body {
     margin: 0;
-    font-size: 40px;
+    font-size: 16px;
+    height: 100vh;
+    font-family: 'Courier';
+    background-color: $bg-primary-color;
+    color: $text-primary-color;
+    
+    a, a:visited, a:hover {
+        text-decoration: none;
+        color: $text-primary-color;
+    }
 }

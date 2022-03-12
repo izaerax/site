@@ -1,14 +1,15 @@
-<template>
-    <div class="main">
-        <h1>Coming soon</h1>
-    </div>
+<template lang="pug">
+.main coming soon
 </template>
+
+<script setup>
+</script>
+
 <style lang="scss" scoped>
 .main {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
-    color: white;
 }
 </style>
