@@ -2,6 +2,7 @@
 .layout(v-if="!init")
     Header
     slot
+    Footer
 .init(v-else) initializing...
 </template>
 
@@ -17,7 +18,7 @@ onMounted(()=>{
     background-color: $bg-primary-color;
     margin: 0;
     padding: 0;
-    height: 100vh;
+    height: calc(100vh - 140px);
 }
 .init {
     display: flex;

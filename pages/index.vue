@@ -7,9 +7,9 @@
 
 <style lang="scss" scoped>
 .main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 </style>
