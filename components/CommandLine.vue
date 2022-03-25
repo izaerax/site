@@ -5,23 +5,26 @@ form(@submit.prevent="execute")
 
 <script setup>
 // data
-const commandPointer = ref(0)
+const commandPointer = ref(-1)
 const command = ref('')
 const input = ref()
 const history = ref([])
 
 // methods
 const execute = () => {
-  
+  if (command.value === '') return
   //save the command in history and clear the input 
   history.value.push(command.value)
   command.value = ''
 
   //reset the command pointer
-  commandPointer.value = history.value.length - 1
+  commandPointer.value = history.value.length-1
+  console.log(commandPointer.value, history.value)
 }
 
 const browseHistory = (e) => {
+  
+  console.log(commandPointer.value, history.value)
   switch (e.keyCode) {
 
     //backspace
@@ -32,21 +35,23 @@ const browseHistory = (e) => {
     } break
     //arrow up
     case 38: {
-      if (commandPointer.value > 0) {
+      if (commandPointer.value >= 0) {
+        command.value = history.value[commandPointer.value]        
         commandPointer.value--
-        command.value = history.value[commandPointer.value]
       }
     } break
     
     //arrow down
     case 40: {
       if(commandPointer.value < history.value.length-1) {
-      commandPointer.value++
       command.value = history.value[commandPointer.value]
+      commandPointer.value++
       }
     } break
 
   }
+  console.log(commandPointer.value, history.value)
+
 }
 //hooks
 onMounted(() => {
