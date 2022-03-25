@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-const init = ref(true)
+const init = ref(false)
 onMounted(()=>{
     setTimeout(()=>init.value = false, 3000)
 })
