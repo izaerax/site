@@ -2,12 +2,6 @@
 input($attr)
 </template>
 
-<script>
-import { defineComponent } from '@vue/composition-api'
+<script lang="ts" setup>
 
-export default defineComponent({
-    setup() {
-        
-    },
-})
 </script>

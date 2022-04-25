@@ -10,21 +10,28 @@ const command = ref('')
 const input = ref()
 const history = ref([])
 
+const {executeCommand} = useCommandLine()
+
 // methods
 const execute = () => {
   if (command.value === '') return
+
   //save the command in history and clear the input 
   history.value.push(command.value)
+  
+  executeCommand(command.value)
+
   command.value = ''
 
   //reset the command pointer
   commandPointer.value = history.value.length-1
+  
   console.log(commandPointer.value, history.value)
+
 }
 
 const browseHistory = (e) => {
   
-  console.log(commandPointer.value, history.value)
   switch (e.keyCode) {
 
     //backspace
@@ -48,11 +55,9 @@ const browseHistory = (e) => {
       commandPointer.value++
       }
     } break
-
   }
-  console.log(commandPointer.value, history.value)
-
 }
+
 //hooks
 onMounted(() => {
   if (input.value) {

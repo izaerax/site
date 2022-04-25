@@ -11,8 +11,14 @@
     "nuxt3": "latest"
   },
   "dependencies": {
+    "@nuxtjs/i18n": "^7.2.1",
+    "@pinia/nuxt": "^0.1.8",
+    "@vueuse/nuxt": "^8.3.1",
+    "pinia": "^2.0.13",
     "sass": "^1.49.9",
     "sass-loader": "^12.6.0",
-    "vite-plugin-pug": "^0.3.1"
+    "vite-plugin-pug": "^0.3.1",
+    "vue-i18n": "^9.1.9",
+    "vue-i18n-composable": "^0.2.2"
   }
 }

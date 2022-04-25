@@ -1,15 +1,43 @@
 <template lang="pug">
-.main We and our partners store and/or access information on a device, such as cookies and process personal data, such as unique identifiers and standard information sent by a device for personalised ads and content, ad and content measurement, and audience insights, as well as to develop and improve products.
-    | With your permission we and our partners may use precise geolocation data and identification through device scanning. You may click to consent to our and our partners’ processing as described above. Alternatively you may access more detailed information and change your preferences before consenting or to refuse consenting.
-    | Please note that some processing of your personal data may not require your consent, but you have a right to object to such processing. Your preferences will apply to this website only. You can change your preferences at any time by returning to this site or visit our privacy policy.
-    | Please note that some processing of your personal data may not require your consent, but you have a right to object to such processing. Your preferences will apply to this website only. You can change your preferences at any time by returning to this site or visit our privacy policy.
-    | Please note that some processing of your personal data may not require your consent, but you have a right to object to such processing. Your preferences will apply to this website only. You can change your preferences at any time by returning to this site or visit our privacy policy.
-
+.main
+	UITemporizedText(:ref="setRef(1)" text='0 ciao mondociao mondociao mondociao mondociao mondociao mondociao mondo' :interval="50" @finished="nextTempText")
+	UITemporizedText(:ref="setRef(0)" text='1 ciao mondociao mondociao mondociao mondociao mondociao mondociao mondo' :interval="50" @finished="nextTempText")
 </template>
+
+<script lang="ts" setup>
+const temporizedTextsArr = []
+let tempCounter = 0
+
+/**
+ * Used to create an array 
+ * source: https://docs.w3cub.com/vue~3/guide/migration/array-refs
+ */
+const setRef = index => {
+	return (el) => {
+		if (el) {
+			temporizedTextsArr[index] = el
+		}
+	}
+}
+
+/**
+ * Called to render the temporized text in order specified by position in temporizedTextsArr
+ */
+const nextTempText = () => {
+	if (tempCounter < temporizedTextsArr.length) {
+		temporizedTextsArr[tempCounter].resume()
+		tempCounter++
+	}
+}
+
+onMounted(() => nextTempText())
+
+</script>
 
 <style lang="scss" scoped>
 .main {
     display: flex;
+		flex-grow: column;
     justify-content: center;
     align-items: center;
     height: calc(100vh - 40px);
