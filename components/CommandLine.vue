@@ -25,13 +25,10 @@ const execute = () => {
 
   //reset the command pointer
   commandPointer.value = history.value.length-1
-  
-  console.log(commandPointer.value, history.value)
 
 }
 
 const browseHistory = (e) => {
-  
   switch (e.keyCode) {
 
     //backspace
@@ -51,8 +48,10 @@ const browseHistory = (e) => {
     //arrow down
     case 40: {
       if(commandPointer.value < history.value.length-1) {
-      command.value = history.value[commandPointer.value]
-      commandPointer.value++
+        commandPointer.value++
+        command.value = history.value[commandPointer.value]
+      } else {
+        command.value = ''
       }
     } break
   }
