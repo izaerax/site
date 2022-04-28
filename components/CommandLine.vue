@@ -1,13 +1,16 @@
 <template lang="pug">
 form(@submit.prevent="execute")
-  input(v-model="command" ref="input" @keydown="browseHistory")
+  .command 
+    div debian@server1-uk1:~$ 
+    input(v-model="command" ref="input" @keydown="browseHistory")
 </template>
 
 <script setup>
 // data
 const commandPointer = ref(-1)
-const command = ref('')
+const command = useCommandState()
 const input = ref()
+
 const history = ref([])
 
 const {executeCommand} = useCommandLine()
@@ -66,12 +69,39 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-input, textarea {
-  color: $text-primary-color;
-  background-color: $bg-primary-color;
-  width: 100%;
-  &:focus, &:hover {
-    outline: none;
+form {
+  padding-top: 20px;
+
+  .command {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5px;
+
+    div {
+      display: flex;
+       align-items: center;
+      
+    }
+
+    input, textarea {
+      font-family: 'Courier';
+      flex-grow: 1;
+      font-size: 16px;
+      border-width: 0px;
+      color: $text-primary-color;
+      background-color: $bg-primary-color;
+      padding-left: 5px;
+    }
+    *:focus {
+      border-width: 0px;
+      outline: none;
+      outline-style: none;
+      border-color: inherit;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
   }
 }
+
+
 </style>

@@ -1,0 +1,1 @@
+export const useCommandState = () => useState<string>('command', () => '')
