@@ -11,6 +11,7 @@
 			:text="enMessages.index.welcome"
 			:interval="50" @finished="nextTempText"
 		)
+		Console
 		CommandLine(ref="commandLine")
 </template>
 

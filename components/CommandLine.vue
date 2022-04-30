@@ -12,12 +12,10 @@ form(@submit.prevent="execute")
 <script setup>
 // data
 const path = ref('$')
-
 const commandPointer = ref(-1)
 const command = useCommandState()
 const input = ref()
-
-const history = ref([])
+const history = useHistoryState()
 
 const {executeCommand} = useCommandLine()
 
