@@ -1,12 +1,18 @@
 <template lang="pug">
 form(@submit.prevent="execute")
   .command 
-    div debian@server1-uk1:~$ 
-    input(v-model="command" ref="input" @keydown="browseHistory")
+    div debian@server1-uk1:~{{ path }}
+    input(
+      v-model="command" 
+      ref="input" 
+      @keydown="browseHistory"
+    )
 </template>
 
 <script setup>
 // data
+const path = ref('$')
+
 const commandPointer = ref(-1)
 const command = useCommandState()
 const input = ref()
@@ -15,7 +21,7 @@ const history = ref([])
 
 const {executeCommand} = useCommandLine()
 
-// methods
+//---------------------------------------------methods-------------------------------------
 const execute = () => {
   if (command.value === '') return
 
@@ -33,13 +39,19 @@ const execute = () => {
 
 const browseHistory = (e) => {
   switch (e.keyCode) {
-
     //backspace
     case 8: {
       //reset command pointer
       commandPointer.value = history.value.length-1
 
     } break
+
+    //tab
+    case 9: {
+      console.log('tab pressed')
+      e.preventDefault()
+    } break
+
     //arrow up
     case 38: {
       if (commandPointer.value >= 0) {
@@ -60,11 +72,20 @@ const browseHistory = (e) => {
   }
 }
 
-//hooks
+const focusInput = (e) => {
+  input.value.focus()
+}
+
+//----------------------------------------------hooks--------------------------------------
 onMounted(() => {
   if (input.value) {
     input.value.focus()
   }
+})
+
+//-------------------------------------------exposed methods-------------------------------
+defineExpose({
+	focusInput
 })
 </script>
 

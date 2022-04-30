@@ -1,5 +1,5 @@
 <template lang="pug">
-.layout(v-if="!init" @contextmenu="copyInCommandline")
+.layout(v-if="!init" @contextmenu.prevent="pasteInCommandline")
 	Header
 	slot
 .init(v-else) initializing...
@@ -9,10 +9,9 @@
 const init = ref(false);
 const commandState = useCommandState()
 
-const copyInCommandline = async (evt) => {
-  evt.preventDefault();
+const pasteInCommandline = async () => {
   const clip = await navigator.clipboard.readText()
-  commandState.value = clip
+  commandState.value += clip
 }
 
 onMounted(() => {

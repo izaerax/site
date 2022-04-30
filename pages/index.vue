@@ -11,17 +11,24 @@
 			:text="enMessages.index.welcome"
 			:interval="50" @finished="nextTempText"
 		)
-		
-		CommandLine
+		CommandLine(ref="commandLine")
 </template>
 
 <script lang="ts" setup>
-import useTemporizedTexts from '/composables/useTemporizedTexts.ts'
+import useTemporizedTexts from '/composables/useTemporizedTexts'
 import enMessages from '/i18n/en'
 
 const {setRef, nextTempText} = useTemporizedTexts()
-
+const commandLine = ref()
 onMounted(() => nextTempText())
+
+const focusInput = () => {
+	commandLine.value.focusInput()
+}
+
+defineExpose({
+	focusInput
+})
 
 </script>
 
