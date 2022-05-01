@@ -1,2 +1,5 @@
 export const useCommandState = () => useState<string>('command', () => '')
 export const useHistoryState = () => useState<Array<string>>('history', () => [])
+export const usePathState = () => useState<string>('path', () => '')
+export const useCurrentDirState = () => useState<string>('currentDir', () => 'home')
+export const useUserState = () => useState<string>('user', () => 'debian')

@@ -1,7 +1,7 @@
 <template lang="pug">
 form(@submit.prevent="execute")
   .command 
-    div debian@server1-uk1:~{{ path }}
+    Path
     input(
       v-model="command" 
       ref="input" 
@@ -11,23 +11,21 @@ form(@submit.prevent="execute")
 
 <script setup>
 // data
-const path = ref('$')
 const commandPointer = ref(-1)
 const command = useCommandState()
-const input = ref()
 const history = useHistoryState()
-
-const {executeCommand} = useCommandLine()
+const input = ref()
 
 //---------------------------------------------methods-------------------------------------
+/**
+ * Perform the execution of the command. 
+ */
 const execute = () => {
   if (command.value === '') return
 
   //save the command in history and clear the input 
+  //ATTENTION: putting data in history its like executing a command due to vue reactivity.
   history.value.push(command.value)
-  
-  executeCommand(command.value)
-
   command.value = ''
 
   //reset the command pointer
@@ -89,7 +87,7 @@ defineExpose({
 
 <style lang="scss" scoped>
 form {
-  padding-top: 20px;
+  // padding-top: 20px;
 
   .command {
     display: flex;
@@ -108,7 +106,7 @@ form {
       font-size: 16px;
       border-width: 0px;
       color: $text-primary-color;
-      background-color: $bg-primary-color;
+      background-color: rgba(0,0,0,0);
       padding-left: 5px;
     }
     *:focus {

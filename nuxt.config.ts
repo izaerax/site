@@ -8,6 +8,13 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         //['@nuxtjs/i18n', locales]
     ],
+    components: {
+    dirs: [
+        '~/components',
+        '~/components/UI',
+        '~/components/command/render'
+    ]
+    },
     css: ["~/assets/css/main.scss"],
     vite: {
         css: {

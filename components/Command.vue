@@ -1,18 +1,40 @@
-<script lang="ts">
-import {h} from 'vue'
-export default {
-  props: {
-    command: String
-  },
-  setup(props) {
-    return () => h('Ls') 
+<template lang="pug">
+
+.command 
+  // todo: find a better way
+  Path {{ fullCommand }}
+  Cd(v-if="command === 'cd'" :args="args")
+  Ls(v-else-if="command === 'ls'" :args="args")
+  Help(v-else-if="command === 'help'" :args="args")
+  div(v-else) -bash: {{ fullCommand }}: command not found 
+</template>
+
+<script lang="ts" setup>
+import {computed} from 'vue'
+
+const props = defineProps({
+  fullCommand: {
+    type: String,
+    required: true
   }
+})
+
+const index = props.fullCommand.indexOf(' ')
+let command = ''
+let args = ''
+
+if (index < 0) {
+  command = props.fullCommand
+} else {
+  command = props.fullCommand.slice(0, index)
+  args = props.fullCommand.slice(index + 1)
 }
 
 </script>
 
 <style lang="scss">
 </style>
+
 We trust you have received the usual lecture from the local System
 Administrator. It usually boils down to these three things:
 

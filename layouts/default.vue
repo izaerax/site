@@ -10,6 +10,7 @@ const init = ref(false);
 const commandState = useCommandState()
 
 const pasteInCommandline = async () => {
+  // todo: find a way to paste in cursor position
   const clip = await navigator.clipboard.readText()
   commandState.value += clip
 }
@@ -25,7 +26,7 @@ onMounted(() => {
   background-color: $bg-primary-color;
   margin: 0;
   padding: 0;
-  height: calc(100vh - 140px);
+  height: 100vh;
 }
 .init {
   display: flex;
