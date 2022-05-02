@@ -30,7 +30,7 @@
         force symbolic links to be followed: resolve symbolic
         |links in DIR after processing instances of `..`
     br
-    br    
+    br
     |&nbsp;&nbsp;-P&nbsp;&nbsp;&nbsp;&nbsp;
     |use the physical directory structure without following
     |symbolic links: resolve symbolic links in DIR before
@@ -59,7 +59,6 @@
 </template>
 
 <script lang="ts" setup>
-import { directories } from '~/assets/data/commands.ts'
 
 const props = defineProps({
   args: {type: String, required: false}

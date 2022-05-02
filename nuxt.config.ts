@@ -16,6 +16,10 @@ export default defineNuxtConfig({
     ]
     },
     css: ["~/assets/css/main.scss"],
+    server: {
+        host: '0.0.0.0',
+        port: 3000,
+    },
     vite: {
         css: {
             preprocessorOptions: {
