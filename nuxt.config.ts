@@ -1,5 +1,4 @@
-import { defineNuxtConfig } from 'nuxt3'
-import locales from './i18n/locales'
+import { defineNuxtConfig } from 'nuxt'
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
@@ -9,16 +8,19 @@ export default defineNuxtConfig({
         //['@nuxtjs/i18n', locales]
     ],
     components: {
-    dirs: [
-        '~/components',
-        '~/components/UI',
-        '~/components/command/render'
-    ]
+        dirs: [
+            '~/components/',
+            '~/components/UI/',
+            '~/components/command/render/'
+        ]
     },
     css: ["~/assets/css/main.scss"],
     server: {
         host: '0.0.0.0',
         port: 3000,
+    },
+    typescript: {
+        shim: false
     },
     vite: {
         css: {

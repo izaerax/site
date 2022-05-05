@@ -3,9 +3,9 @@
 .command 
   // todo: find a better way
   Path {{ fullCommand }}
-  Cd(v-if="command === 'cd'" :args="args")
-  Ls(v-else-if="command === 'ls'" :args="args")
-  Help(v-else-if="command === 'help'" :args="args")
+  LazyCommandRenderCd(v-if="command === 'cd'" :args="args")
+  LazyCommandRenderLs(v-else-if="command === 'ls'" :args="args")
+  LazyCommandRenderHelp(v-else-if="command === 'help'" :args="args")
   div(v-else) -bash: {{ fullCommand }}: command not found 
 </template>
 

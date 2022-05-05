@@ -23,15 +23,14 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .layout {
-  background-color: $bg-primary-color;
   margin: 0;
   padding: 0;
-  height: 100vh;
 }
 .init {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: $bg-primary-color;
 }
 </style>

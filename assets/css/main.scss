@@ -1,15 +1,24 @@
 body {
   margin: 0;
-  font-size: 16px;
-  height: 100vh;
-  font-family: 'Courier';
+  font-size: 14px;
+  font-family: monospace, sans-serif;
+  line-height: 15px;
+  letter-spacing: 1px;
   background-color: $bg-primary-color;
   color: $text-primary-color;
+  background-color: $bg-primary-color;
 
   a, a:visited, a:hover {
     text-decoration: none;
     color: $text-primary-color;
   }
+}
+
+.standard-font {
+  font-size: 14px;
+  font-family: monospace, sans-serif;
+  line-height: 15px;
+  letter-spacing: 1px;
 }
 
 .w-100 {
@@ -22,4 +31,18 @@ body {
 
 .text-center {
   text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
 }

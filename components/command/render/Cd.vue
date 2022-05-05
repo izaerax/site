@@ -22,28 +22,32 @@
     br
     |Options:
     br
-    .options-section 
+    .option-section 
+      .row
+        .option 
+          | -L
+        .description
+          |force symbolic links to be followed: resolve symbolic
+          |links in DIR after processing instances of `..`
+      .row
+        .option 
+          | -P
+        .description 
+          |use the physical directory structure without following
+          |symbolic links: resolve symbolic links in DIR before
+          |processing instances of `..`
       br
-      .options 
-        | -L
-      .description
-        force symbolic links to be followed: resolve symbolic
-        |links in DIR after processing instances of `..`
-    br
-    br
-    |&nbsp;&nbsp;-P&nbsp;&nbsp;&nbsp;&nbsp;
-    |use the physical directory structure without following
-    |symbolic links: resolve symbolic links in DIR before
-    |processing instances of `..`
-    br
-    |&nbsp;&nbsp;-e&nbsp;&nbsp;&nbsp;&nbsp;
-    |if the -P option is supplied, and the current working
-    |directory cannot be determined successfully, exit with
-    |a non-zero status
-    br
-    |&nbsp;&nbsp;-@&nbsp;&nbsp;&nbsp;&nbsp;
-    |on systems that support it, present a file with extended
-    |attributes as a directory containing the file attributes
+      .row
+        .option -e
+        .description 
+          |if the -P option is supplied, and the current working
+          |directory cannot be determined successfully, exit with
+          |a non-zero status
+      .row
+        .option -@
+        .description 
+          |on systems that support it, present a file with extended
+          |attributes as a directory containing the file attributes
     br
     br
     |The default is to follow symbolic links, as if `-L` were specified.
@@ -125,16 +129,17 @@ if (props.args) {
 <style lang="scss" scoped>
 .help {
   padding-left: 40px;
+  max-width: 600px;
 
-  .options-section {
+  .option-section {
     display: flex;
+    flex-direction: column;
 
-    .options {
-      flex-grow: 1;
-      width: 30%;
+    .option {
+      width: 20%;
     }
     .description {
-      flex-grow: 2;
+      width: 80%;
     }
   }
 }

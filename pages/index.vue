@@ -1,13 +1,12 @@
 <template lang="pug">
 .container
-	.row
-		TemporizedText.text-center(
-			:ref="setRef(0)" 
-			text='Work in progress' 
-			:interval="50" @finished="nextTempText"
-		)
-		Console
-		CommandLine(ref="commandLine")
+	UITemporizedText.text-center(
+		:ref="setRef(0)" 
+		text='Work in progress' 
+		:interval="50" @finished="nextTempText"
+	)
+	Console
+	CommandLine(ref="commandLine")
 </template>
 
 <script lang="ts" setup>

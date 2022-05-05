@@ -3,6 +3,7 @@ form(@submit.prevent="execute")
   .command 
     Path
     input(
+      class="standard-font"
       v-model="command" 
       ref="input" 
       @keydown="browseHistory"
@@ -101,13 +102,11 @@ form {
     }
 
     input, textarea {
-      font-family: 'Courier';
       flex-grow: 1;
-      font-size: 16px;
       border-width: 0px;
       color: $text-primary-color;
       background-color: rgba(0,0,0,0);
-      padding-left: 5px;
+      padding-left: 9px;
     }
     *:focus {
       border-width: 0px;
