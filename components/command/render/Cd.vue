@@ -124,6 +124,12 @@ if (props.args) {
 
 }
 
+onMounted(() => {
+  //scroll to bottom after rendering
+  console.log('scroll')
+  window.scroll({top: document.body.scrollHeight+20, behavior: 'smooth'})
+  window.scrollBy(0,550)
+})
 </script>
 
 <style lang="scss" scoped>

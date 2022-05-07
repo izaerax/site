@@ -31,7 +31,6 @@ const execute = () => {
 
   //reset the command pointer
   commandPointer.value = history.value.length-1
-
 }
 
 const browseHistory = (e) => {
@@ -69,7 +68,11 @@ const browseHistory = (e) => {
   }
 }
 
-const focusInput = (e) => {
+/**
+ * Used to focus the commandLine input
+ * EXPOSED
+ */
+const focusInput = () => {
   input.value.focus()
 }
 
@@ -78,6 +81,13 @@ onMounted(() => {
   if (input.value) {
     input.value.focus()
   }
+})
+
+onUpdated(() => {
+  //scroll to bottom after rendering command
+  console.log('scroll command line')
+  window.scroll({top: document.body.scrollHeight+20, behavior: 'smooth'})
+  window.scrollBy(0,550)
 })
 
 //-------------------------------------------exposed methods-------------------------------
