@@ -8,9 +8,10 @@ div
 </template>
 
 <script setup>
-const user = useUserState()
-const p = usePathState()
-const path = computed(() => (p.value) ? p.value : '~')
+const props = defineProps({
+  path: String,
+  user: String
+})
 </script>
 
 <style lang="scss" scoped>

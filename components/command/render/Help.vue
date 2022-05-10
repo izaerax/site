@@ -7,9 +7,9 @@
     | A star (*) next to a name means that the command is disabled.<br><br>
   .command-list
     .row
-      .command(v-for="index of firstRow" :key="index") {{ index }}
+      .command.col-6(v-for="index of firstRow" :key="index") {{ index }}
     .row
-      .command(v-for="index of secondRow" :key="index") {{ index }}
+      .command.col-6(v-for="index of secondRow" :key="index") {{ index }}
 </template>
 
 <script lang="ts" setup>
@@ -19,12 +19,10 @@ const secondRow = commandList.slice(commandList.length / 2, commandList.length)
 </script>
 
 <style lang="scss" scoped>
-.command-list {
-  display: flex;
-  flex-direction: row;
-  .row {
-    width: 50%;
-    flex-grow: 1;
+.help{
+  .command-list {
+    display: flex;
+    flex-direction: row;
   }
 }
 </style>

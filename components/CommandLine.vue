@@ -1,22 +1,27 @@
 <template lang="pug">
 form(@submit.prevent="execute")
   .command 
-    Path
+    Path(:user="user" :path="path")
     input(
       class="standard-font"
       v-model="command" 
       ref="input" 
-      @keydown="browseHistory"
+      @keydown="checkShortcut"
     )
 </template>
 
-<script setup>
+<script lant="ts" setup>
+import { useFilesystemStore } from '~~/stores/filesystemStore';
+
 // data
 const commandPointer = ref(-1)
 const command = useCommandState()
 const history = useHistoryState()
 const input = ref()
 
+const user = useUserState().value
+const filesystemStore = useFilesystemStore()
+const path = computed(() => (filesystemStore.fullpath) ? filesystemStore.fullpath : '~')
 //---------------------------------------------methods-------------------------------------
 /**
  * Perform the execution of the command. 
@@ -33,7 +38,10 @@ const execute = () => {
   commandPointer.value = history.value.length-1
 }
 
-const browseHistory = (e) => {
+/**
+ * comand line shortcuts
+ */ 
+const checkShortcut = (e) => {
   switch (e.keyCode) {
     //backspace
     case 8: {

@@ -1,8 +1,7 @@
 <template lang="pug">
-
 .command 
   // todo: find a better way
-  Path {{ fullCommand }}
+  Path(:user="user" :path="path") {{ fullCommand }}
   LazyCommandRenderCd(v-if="command === 'cd'" :args="args")
   LazyCommandRenderLs(v-else-if="command === 'ls'" :args="args")
   LazyCommandRenderHelp(v-else-if="command === 'help'" :args="args")
@@ -10,6 +9,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useFilesystemStore } from '~~/stores/filesystemStore';
 
 const props = defineProps({
   fullCommand: {
@@ -17,6 +17,14 @@ const props = defineProps({
     required: true
   }
 })
+
+const user = useUserState()
+const filesystemStore = useFilesystemStore()
+const computePath = () => {
+  if (filesystemStore.fullpath) return filesystemStore.fullpath
+  else return '~'
+}
+const path = computePath()
 
 const index = props.fullCommand.indexOf(' ')
 let command = ''
@@ -33,12 +41,3 @@ if (index < 0) {
 
 <style lang="scss">
 </style>
-
-We trust you have received the usual lecture from the local System
-Administrator. It usually boils down to these three things:
-
-    #1) Respect the privacy of others.
-    #2) Think before you type.
-    #3) With great power comes great responsibility.
-
-[sudo] password for olti:

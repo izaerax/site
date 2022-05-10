@@ -63,13 +63,14 @@
 </template>
 
 <script lang="ts" setup>
+import { useFilesystemStore } from '~~/stores/filesystemStore';
+
 
 const props = defineProps({
   args: {type: String, required: false}
 })
 
-const path = usePathState()
-const { changeDir } = useDirectories()
+const fsStore = useFilesystemStore() 
 
 let argsList = []
 let showHelp = false
@@ -84,10 +85,11 @@ if (props.args) {
 
   options = argsList.filter(str => str.charAt(0) === '-')
   directory = argsList.filter(str => str.charAt(0) !== '-')
+  console.debug('cd: options', options, 'directory', directory)
 
+  // check the number of arguments
   if (directory.length > 2) {
     errorMessage = 'bash: cd: too many arguments'
-
   } else {
     //check if the options are correct
     options.some((option) => {
@@ -114,19 +116,19 @@ if (props.args) {
       return false
     })
 
-    // if no errors found, try to change the directory
+    // if no errors found and no help option, try to change the directory
     if (!errorMessage && !showHelp) {
-      if (!changeDir(directory)) {
-        errorMessage = `bash: cd: ${directory}: No such file or directory`
-      }
+        if(!fsStore.changePath(directory[0])) 
+          errorMessage = `bash: cd: ${directory}: No such file or directory`
     }
   }
-
+} else {
+  // if no path passed, return to root path
+  fsStore.changePath('')
 }
 
 onMounted(() => {
   //scroll to bottom after rendering
-  console.log('scroll')
   window.scroll({top: document.body.scrollHeight+20, behavior: 'smooth'})
   window.scrollBy(0,550)
 })

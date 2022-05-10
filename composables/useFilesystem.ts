@@ -1,4 +1,4 @@
-import { directories } from '~/assets/data/static'
+
 
 export default () => {
 

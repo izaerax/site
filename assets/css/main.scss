@@ -46,6 +46,20 @@ body {
 }
 
 .row {
-  display: flex;
+  display: flex-inline;
   flex-direction: row;
+  max-width: 100%;
+  width: 100%;
+
+  .col {
+    flex: 1 0 0%;
+    
+    // &-auto {
+    //   flex: 0 0 auto
+    // }
+    // &-6 {
+    //   flex: 1 0 50%
+    // }
+  }
+  
 }

@@ -8,5 +8,4 @@ export const useTemporizingStore = defineStore('temporizingStore', {
       queue: [],
     }
   },
-
 })
