@@ -30,7 +30,13 @@ export const useFilesystemStore = defineStore('filesystem', {
           {
             name: 'projects',
             type: FileType.DIR,
-            files: [],
+            files: [
+              {
+                name: 'MarinaService',
+                type: FileType.DIR,
+                files: [],
+              }
+            ],
           }, {
             name: 'contacts',
             type: FileType.DIR,
@@ -43,14 +49,9 @@ export const useFilesystemStore = defineStore('filesystem', {
     }
   },
   getters: {
-    getFiles(state): Array<MyFile> {
-      return getFilesPath(state.root, state.shifter)
+    getCurrentDir(state): MyFile {
+      return getFilePath(state.root, [...state.shifter])
     },
-    getShiftArrayByPath(state) {
-      return (paths: Array<string>) => {
-        return getShiftArray(paths, state.root, [])
-      } 
-    } 
   },
   actions: {
     /**
@@ -65,24 +66,45 @@ export const useFilesystemStore = defineStore('filesystem', {
         this.shifter = []
         return true
       } else {
-        if (newPath.charAt(0) === '/') {
-          // absolute path change
-          const paths = newPath.split('/')
-          // todo: manage the .. and .
-          
-          paths.shift()
-          const newShift = this.getShiftArrayByPath(paths)
+        let newShift: Array<number>
 
-          // if no errors occured
-          if (newShift) {
-            this.shifter = newShift
-            this.fullpath = newPath
-            return true
+        const paths = normalizePaths(newPath.split('/'))
+
+        
+
+        if (paths[0] === '') {
+          // absolute path change
+          
+          newPath = ''
+          for (const p of paths) {
+            if (p !== '') newPath = newPath + '/' + p
           }
 
+          //remove the '' from array
+          paths.shift()
+          
+          newShift = getShiftArray(paths, this.root, [])
         } else {
           // relative path change
+          newPath = this.fullpath
+          for (const p of paths) {
+            if (p !== '') newPath = newPath + '/' + p
+          }
+          newShift = getShiftArray(paths, this.getCurrentDir, [...this.shifter])
         }
+
+        //TODO: regenerate the path  
+
+        // console.debug(newPath, newShift)
+        // newPath = getFullpathFromShifter(this.root, [...newShift], '')
+        console.debug('shitf', newShift)
+        // if no errors occured
+        if (newShift) {
+          this.shifter = newShift
+          this.fullpath = newPath
+          return true
+        }
+
       }
 
       return false
@@ -93,25 +115,43 @@ export const useFilesystemStore = defineStore('filesystem', {
 
 /**
  * recursive function that walk throught the filestore using the shifter array 
- * and returns the array of files in the current directory
+ * and returns the current directory
  * @param mf MyFile 
  * @param arr shifter array
  * @returns files in the current array
  */
-const getFilesPath = (mf: MyFile, arr: Array<number>): Array<MyFile> | null => {
+const getFilePath = (mf: MyFile, arr: Array<number>): MyFile | null => {
   if (arr.length === 0) {
-    return mf.files
+    return mf
   } else {
     const i = arr.pop()
-    return getFilesPath(mf.files[i], arr)
+    return getFilePath(mf.files[i], arr)
   }
 }
 
 /**
- * returns the shift array of the paths starting from /
+ * construct and return the fullpath from shifter array
+ * @param root filestore /
+ * @param shifter 
+ * @returns path
+ */
+const getFullpathFromShifter = (root: MyFile, shifter: Array<number>, path: string): string | null => {
+  if (shifter.length === 0){
+    return path
+  } else {
+    const next = shifter.shift()
+    if (root.files[next]) {
+      return getFullpathFromShifter(root.files[next], shifter, path+=root.files[next].name)
+    }
+  }
+  return null
+}
+
+/**
+ * returns the shift array of the paths
  * @param paths paths to walk throught
  * @param shift current shifter array* 
- * @param mf MyFile root elem
+ * @param mf MyFile root element
  */
 const getShiftArray = (paths: Array<string>, mf: MyFile, shift: Array<number>): Array<number> => {
   // check if the array is over or path is /
@@ -128,4 +168,24 @@ const getShiftArray = (paths: Array<string>, mf: MyFile, shift: Array<number>): 
     // el not found
     return null
   }
+}
+
+/**
+ * normalize the paths array (ex: ['projects', '..', 'projects', '.'] => projects)
+ * @param paths 
+ * @returns 
+ */
+const normalizePaths = (paths: Array<string>) => {
+  const res = []
+  for (const path of paths) {
+    if (path === '.') continue
+    if (path === '..') {
+      if (res.length === 0 || res[res.length -1] === '..') res.push(path)
+      else res.pop()
+    } 
+    else res.push(path)
+  }
+  console.debug('normalizePath-paths', paths)
+  console.debug('normalizePath-res', res)
+  return res
 }

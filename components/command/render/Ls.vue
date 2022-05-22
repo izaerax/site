@@ -12,7 +12,7 @@ const props = defineProps({
   args: { type: String, required: false },
 })
 
-const files = useFilesystemStore().getFiles
+const files = useFilesystemStore().getCurrentDir.files
 
 </script>
 

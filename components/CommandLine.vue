@@ -22,6 +22,7 @@ const input = ref()
 const user = useUserState().value
 const filesystemStore = useFilesystemStore()
 const path = computed(() => (filesystemStore.fullpath) ? filesystemStore.fullpath : '~')
+
 //---------------------------------------------methods-------------------------------------
 /**
  * Perform the execution of the command. 
@@ -47,7 +48,6 @@ const checkShortcut = (e) => {
     case 8: {
       //reset command pointer
       commandPointer.value = history.value.length-1
-
     } break
 
     //tab

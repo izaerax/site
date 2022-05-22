@@ -1,5 +1,5 @@
 <template lang="pug">
-.container
+.container(ref="root")
 	UITemporizedText.text-center(
 		:ref="setRef(0)" 
 		text='Work in progress' 
@@ -14,7 +14,11 @@ import useTemporizedTexts from '/composables/useTemporizedTexts'
 
 const {setRef, nextTempText} = useTemporizedTexts()
 const commandLine = ref()
-onMounted(() => nextTempText())
+const root = ref()
+
+onMounted(() => {
+	nextTempText()
+})
 
 const focusInput = () => {
 	commandLine.value.focusInput()
