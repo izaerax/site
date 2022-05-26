@@ -33,7 +33,7 @@ export const useFilesystemStore = defineStore('filesystem', {
             files: [
               {
                 name: 'MarinaService',
-                type: FileType.DIR,
+                type: FileType.FILE,
                 files: [],
               }
             ],
@@ -70,8 +70,6 @@ export const useFilesystemStore = defineStore('filesystem', {
 
         const paths = normalizePaths(newPath.split('/'))
 
-        
-
         if (paths[0] === '') {
           // absolute path change
           
@@ -82,22 +80,20 @@ export const useFilesystemStore = defineStore('filesystem', {
 
           //remove the '' from array
           paths.shift()
-          
+
           newShift = getShiftArray(paths, this.root, [])
         } else {
           // relative path change
-          newPath = this.fullpath
-          for (const p of paths) {
-            if (p !== '') newPath = newPath + '/' + p
-          }
+          
+          // get the new shift array
           newShift = getShiftArray(paths, this.getCurrentDir, [...this.shifter])
+          
+          // if null, path not found
+          if (!newShift) return false
+
+          newPath = getFullpathFromShifter(this.root, [...newShift], '')
         }
 
-        //TODO: regenerate the path  
-
-        // console.debug(newPath, newShift)
-        // newPath = getFullpathFromShifter(this.root, [...newShift], '')
-        console.debug('shitf', newShift)
         // if no errors occured
         if (newShift) {
           this.shifter = newShift
@@ -108,6 +104,20 @@ export const useFilesystemStore = defineStore('filesystem', {
       }
 
       return false
+    },
+
+    /**
+     * create a directory for each name in names
+     * @param names name of dirs to be crated
+     */
+    mkdir(names: Array<string>) {
+      for (const name of names) {
+        this.getCurrentDir.files.push({
+          name: name,
+          type: FileType.DIR,
+          files: [],
+        })
+      }
     }
   }
 })
@@ -136,12 +146,12 @@ const getFilePath = (mf: MyFile, arr: Array<number>): MyFile | null => {
  * @returns path
  */
 const getFullpathFromShifter = (root: MyFile, shifter: Array<number>, path: string): string | null => {
-  if (shifter.length === 0){
+  if (shifter.length === 0) {
     return path
   } else {
     const next = shifter.shift()
     if (root.files[next]) {
-      return getFullpathFromShifter(root.files[next], shifter, path+=root.files[next].name)
+      return getFullpathFromShifter(root.files[next], shifter, path + '/' + root.files[next].name)
     }
   }
   return null
@@ -155,12 +165,30 @@ const getFullpathFromShifter = (root: MyFile, shifter: Array<number>, path: stri
  */
 const getShiftArray = (paths: Array<string>, mf: MyFile, shift: Array<number>): Array<number> => {
   // check if the array is over or path is /
+  
   if (paths.length === 0 || (paths.length === 1 && paths[0] === '')){
     return shift
   } else {
+
     const dir = paths.shift()
+    
+    if (dir == '..') {
+      
+      // we are in the root folder
+      if (shift.length === 0) {
+        return null
+      }
+
+      //remove the last element of the shifter array
+      shift.pop()
+
+      const fsStore = useFilesystemStore()
+      
+      return getShiftArray(paths, getFilePath(fsStore.root, [...shift]), shift)
+    }
+
     for (const [index, value] of Object.entries(mf.files)) {
-      if (value.name === dir) {
+      if (value.name === dir && value.type === FileType.DIR) {
         shift.push(parseInt(index))
         return getShiftArray(paths, value, shift)
       }
@@ -185,7 +213,5 @@ const normalizePaths = (paths: Array<string>) => {
     } 
     else res.push(path)
   }
-  console.debug('normalizePath-paths', paths)
-  console.debug('normalizePath-res', res)
   return res
 }

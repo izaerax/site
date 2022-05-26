@@ -7,6 +7,6 @@ export const commandList = [
   'ls',
   'sudo',
   'clear',
-  'history [-c] [-d offset] [n] or history -anrw [filename] or history -ps arg [arg...]',
+  'history',
   'echo [-neE] [arg ...]',
 ]
