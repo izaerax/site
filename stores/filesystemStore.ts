@@ -1,4 +1,3 @@
-import { objectPick } from '@vueuse/shared';
 import { defineStore } from 'pinia'
 
 export enum FileType {
@@ -6,10 +5,11 @@ export enum FileType {
   FILE
 }
 
-interface MyFile {
+export interface MyFile {
   name: string;         //relative path name
-  files: Array<MyFile>; //files in the directory
-  type: number          //type of file (dir/file)
+  files?: Array<MyFile>; //files in the directory
+  type: number;         //type of file (dir/file)
+  content?: string;     //content of the file (usually)
 }
 
 interface MyFileSystem {
@@ -32,9 +32,9 @@ export const useFilesystemStore = defineStore('filesystem', {
             type: FileType.DIR,
             files: [
               {
-                name: 'MarinaService',
+                name: 'website',
                 type: FileType.FILE,
-                files: [],
+                content: "this website",
               }
             ],
           }, {
@@ -50,7 +50,7 @@ export const useFilesystemStore = defineStore('filesystem', {
   },
   getters: {
     getCurrentDir(state): MyFile {
-      return getFilePath(state.root, [...state.shifter])
+      return getFilePath(state.root, [...state.shifter]);
     },
   },
   actions: {
@@ -103,7 +103,7 @@ export const useFilesystemStore = defineStore('filesystem', {
 
       }
 
-      return false
+      return false;
     },
 
     /**

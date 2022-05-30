@@ -6,6 +6,7 @@
   LazyCommandRenderLs(v-else-if="command === 'ls'" :args="args")
   LazyCommandRenderHelp(v-else-if="command === 'help'" :args="args")
   LazyCommandRenderMkdir(v-else-if="command === 'mkdir'" :args="args")
+  LazyCommandRenderCat(v-else-if="command === 'cat'" :args="args")
   div(v-else) -bash: {{ fullCommand }}: command not found 
 </template>
 
