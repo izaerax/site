@@ -14,8 +14,8 @@
 
 <script lang="ts" setup>
 import {commandList} from '~/assets/data/commands.ts'
-const firstRow = commandList.slice(0, commandList.length / 2)
-const secondRow = commandList.slice(commandList.length / 2, commandList.length)
+const firstRow = commandList.slice(0, commandList.length / 2 + 1)
+const secondRow = commandList.slice(commandList.length / 2 + 1, commandList.length)
 </script>
 
 <style lang="scss" scoped>

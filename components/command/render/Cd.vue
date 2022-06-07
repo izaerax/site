@@ -63,6 +63,7 @@
 </template>
 
 <script lang="ts" setup>
+//TODO: check about the error message on cd on file. should say 'Not a directory'
 import { useFilesystemStore } from '~~/stores/filesystemStore';
 
 

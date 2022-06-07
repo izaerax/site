@@ -1,5 +1,3 @@
-
-
 //helper for sort: https://www.online-utility.org/text/sort.jsp
 export const commandList = [
   'cd',

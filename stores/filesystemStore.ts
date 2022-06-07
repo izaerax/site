@@ -34,7 +34,7 @@ export const useFilesystemStore = defineStore('filesystem', {
               {
                 name: 'website',
                 type: FileType.FILE,
-                content: "this website",
+                content: "this awesome website!",
               }
             ],
           }, {
